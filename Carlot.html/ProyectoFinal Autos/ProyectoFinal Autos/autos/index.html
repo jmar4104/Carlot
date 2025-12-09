@@ -1,0 +1,87 @@
+<?php require_once "db.php"; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentos de Autos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Gestión de documentos de autos</h1>
+
+  <!-- Formulario -->
+  <form action="upload_document.php" method="POST" enctype="multipart/form-data">
+    <label>Auto</label>
+    <select name="auto_id" required>
+      <option value="">Selecciona un auto</option>
+      <?php
+        $res = $mysqli->query("SELECT id, placa, marca, modelo FROM autos ORDER BY placa ASC");
+        while ($a = $res->fetch_assoc()):
+          $label = $a['placa'] . " — " . $a['marca'] . " " . $a['modelo'];
+      ?>
+        <option value="<?= htmlspecialchars($a['id']) ?>"><?= htmlspecialchars($label) ?></option>
+      <?php endwhile; ?>
+    </select>
+
+    <label>Tipo de documento</label>
+    <select name="tipo" required>
+      <option value="recibo">Recibo</option>
+      <option value="marbete">Marbete</option>
+      <option value="garantia">Garantía</option>
+    </select>
+
+    <label>Archivo</label>
+    <input type="file" name="archivo" accept=".jpg,.jpeg,.png,.pdf" required>
+
+    <label>Fecha de vencimiento</label>
+    <input type="date" name="fecha_vencimiento">
+
+    <label>Descripción</label>
+    <textarea name="descripcion"></textarea>
+
+    <button type="submit">Guardar</button>
+  </form>
+
+  <hr>
+
+  <!-- Tabla de documentos -->
+  <h2>Documentos guardados</h2>
+  <table border="1" cellpadding="8">
+    <tr>
+      <th>Auto</th><th>Tipo</th><th>Subida</th><th>Vence</th><th>Archivo</th><th>Descripción</th>
+    </tr>
+    <?php
+      $sql = "SELECT d.*, a.placa, a.marca, a.modelo
+              FROM documentos_auto d
+              JOIN autos a ON a.id = d.auto_id
+              ORDER BY d.fecha_vencimiento IS NULL, d.fecha_vencimiento ASC, d.fecha_subida DESC";
+      $docs = $mysqli->query($sql);
+      if ($docs && $docs->num_rows):
+        while ($d = $docs->fetch_assoc()):
+          $auto = $d['placa'] . ' — ' . $d['marca'] . ' ' . $d['modelo'];
+          $vence = $d['fecha_vencimiento'] ? htmlspecialchars($d['fecha_vencimiento']) : '—';
+          $isPdf = str_ends_with(strtolower($d['archivo_url']), ".pdf");
+    ?>
+    <tr>
+      <td><?= htmlspecialchars($auto) ?></td>
+      <td><?= htmlspecialchars(ucfirst($d['tipo_documento'])) ?></td>
+      <td><?= htmlspecialchars($d['fecha_subida']) ?></td>
+      <td><?= $vence ?></td>
+      <td>
+        <?php if ($isPdf): ?>
+          <a href="<?= htmlspecialchars($d['archivo_url']) ?>" target="_blank">Ver PDF</a>
+        <?php else: ?>
+          <a href="<?= htmlspecialchars($d['archivo_url']) ?>" target="_blank">Ver imagen</a>
+        <?php endif; ?>
+      </td>
+      <td><?= nl2br(htmlspecialchars($d['descripcion'] ?? "")) ?></td>
+    </tr>
+    <?php
+        endwhile;
+      else:
+        echo "<tr><td colspan='6'>No hay documentos aún.</td></tr>";
+      endif;
+    ?>
+  </table>
+</body>
+</html>
