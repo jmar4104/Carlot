@@ -1,0 +1,60 @@
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+  color: #e0e0e0;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #ff3b3f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 3px #000;
+}
+
+form {
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+  color: #ff3b3f;
+}
+
+select, input[type="text"], input[type="number"], input[type="file"], input[type="date"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+select:focus, input:focus, textarea:focus {
+  outline: none;
+  background: #333;
+  box-shadow: 0 0 8px #ff3b3f;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #ff3b3f;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  text-transform: uppercase;
+  transition: background
