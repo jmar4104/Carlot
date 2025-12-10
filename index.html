@@ -18,7 +18,7 @@
 
   <title></title>
 
-    <link rel="canonical" href="https://codepen.io/filipz/pen/ogXXXPJ">
+    <link rel="canonical" href="https://codepen.io/filipz/pen/ogXXXPJ" >
   
   <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
 
@@ -32,13 +32,7 @@
   window.console = window.console || function(t) {};
 </script>
 
-<!-- Input for phone number -->
-<input type="text" id="phoneInput" placeholder="Enter phone number, e.g., +17871230000" />
 
-<!-- Your existing button -->
-<div>
-    <button onclick="sendLoginTest()" style="margin-left:10px;">Test</button>
-</div>
 
 <script>// API
 function sendLoginTest() {
@@ -115,7 +109,7 @@ function sendLoginTest() {
 <body translate="no" class="">
   <header class="site-header">
   <div class="header-container">
-    <div class="logo-container">
+    <div class="logo-container" onclick="event.preventDefault(); window.location='index.html';">
       <div class="logo-circles">
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
@@ -133,7 +127,7 @@ function sendLoginTest() {
           <div class="nav-hover-square"></div>
         </li>
         <li>
-          <a href="ProyectoFinal%20Autos/ProyectoFinal%20Autos/autos/index.html">DOCUMENTOS</a>
+          <a href="ProyectoFinal%20Autos/ProyectoFinal%20Autos/autos/docs.html">DOCUMENTOS</a>
           <div class="nav-hover-square"></div>
         </li>
       </ul>
